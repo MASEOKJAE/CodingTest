@@ -18,17 +18,17 @@ int judge(char previous[], char compare, int count) {
 int main() {
     int kind = 0, check = 0, // 문장 종류 개수
     wordCount = 0, group = 0; // 단어가 새로 등장할 때마다 count를 한다, group 문장의 개수
-    char tempWord, prevWord[100] = ""; // 비교를 위해 잠시 문자를 저장하는 변수
+    char tempWord, prevWord[100] = ""; // 비교를 위해 잠시 문자를 저장하는 변수, 현재 단어 이전에 등장했던 알파벳을 저장
 
     cin >> kind;
     string sentence[kind];
     int length[kind]; // 각 문장들의 길이
 
     for(int i=0; i<kind; i++) {
-        cin >> sentence[i];
-        length[i] = sentence[i].length();
+        cin >> sentence[i]; // 문장을 입력 받음
+        length[i] = sentence[i].length(); // 문장의 길이르 저장
         tempWord = sentence[i][0]; // 문장에서 가장 최초의 단어로 초기화
-        wordCount++;
+        wordCount++; // 최초 단어가 등장했으므로 카운트 + 1
         for(int j=0; j<=length[i]; j++) {
             if(tempWord != sentence[i][j]) {
                 if(judge(prevWord, tempWord, wordCount) == 1) {
