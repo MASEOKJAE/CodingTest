@@ -4,20 +4,20 @@
 
 using namespace std;
 
-// 
+// 기분 입력값 0
 class Good {
-    float good;
-    float bad;
-    float tempGood;
+    float good; // 기분이 좋은 확률
+    float bad; // 기분이 나쁠 확률
+    float tempGood; // 일시적으로 기분이 좋은 확률을 담는 변수
 public:
-    Good();
-    void gCal(int judge, float data1, float data2);
-    void setGood(float data);
-    void setBad(float data);
-    void setTemp(float data);
-    float getGood();
-    float getBad();
-    float getTemp();
+    Good(); // constructor
+    void gCal(int judge, float data1, float data2); // 확률 계산
+    void setGood(float data); // 좋을 확률 set
+    void setBad(float data); // 나쁠 확률 set
+    void setTemp(float data); // 일시적으로 좋을 확률 set
+    float getGood(); // 좋을 확률 return
+    float getBad(); // 나쁠 확률 return
+    float getTemp(); // 일시적으로 담은 좋을 확률 return
 };
 
 Good::Good() {
@@ -28,7 +28,7 @@ Good::Good() {
 
 void Good::gCal(int judge, float data1, float data2) {
     float result = 0;
-
+    
     if(judge == 0) { // 0일 경우 현재 기분 good
         setTemp(result); // tempGood을 0으로 초기화
         result = (getGood()*data1 + getBad()*data2); // 기분이 좋을 확률 총합
@@ -36,7 +36,7 @@ void Good::gCal(int judge, float data1, float data2) {
     }
     else if(judge == 1) { // 1일 경우 현재 기분 bad
         result = (getGood()*data1 + getBad()*data2); // 기분이 나쁠 확률 총합
-        setGood(getTemp());
+        setGood(getTemp()); // 기분이 나쁠 확률을 계산할 때 같은 기분 좋을 확률값으로 계산해주기 위해 여기서 set을 해준다.
         setBad(result);
     }
 }
@@ -65,7 +65,7 @@ float Good::getTemp() {
     return tempGood;
 }
 
-// 오늘 기분이 나쁠 때
+// 기분 입력값 1
 class Bad {
     float good;
     float bad;
@@ -140,31 +140,26 @@ int main() {
         // 오늘 기분에 따른 최초 확률 기입
         good.setGood(gogo);
         good.setBad(gobad);
-        cout << "최초 good -> " << good.getGood() << "\n";
         // 선택한 날짜의 기분의 확률을 구하는 과정
         for(int i=0; i<when-1; i++) {
-            cout << i+1 << "번째 good\n";
             good.gCal(0, gogo, badgo); // 기분이 좋을 확률
             good.gCal(1, gobad, badbad); // 기분이 나쁠 확률
         }
         // 결과 출력
-        cout << round(good.getGood()*10)/10*1000 << endl;
-        cout << round(good.getBad()*10)/10*1000 << endl;
+        cout << round(good.getGood()*1000) << endl;
+        cout << round(good.getBad()*1000) << endl;
     }
     else if(feeling == 1) { // 오늘 기분이 나쁠 때
         // 오늘 기분에 따른 최초 확률 기입
         bad.setGood(badgo);
         bad.setBad(badbad);
-         cout << "최초 good -> " << bad.getGood() << "\n";
         // 선택한 날짜의 기분의 확률을 구하는 과정
         for(int i=0; i<when-1; i++) {
-            cout << bad.getGood() << endl;
             bad.bCal(0, gogo, badgo); // 기분이 좋을 확률
-            cout << bad.getGood() << endl;
             bad.bCal(1, gobad, badbad); // 기분이 나쁠 확률
         }
         // 결과 출력
-        cout << round(bad.getGood()*10)/10*1000 << endl;
-        cout << round(bad.getBad()*10)/10*1000 << endl;
+        cout << round(bad.getGood()*1000) << endl;
+        cout << round(bad.getBad()*1000) << endl;
     }
 }
