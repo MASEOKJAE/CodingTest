@@ -3,7 +3,7 @@
 
 import java.util.Scanner;
 
-public class prime {
+public class Prime {
     public static int primeChecker(int temp) {
         int result = 0, cal = 0, checker = 0;
 
